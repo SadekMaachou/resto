@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const cookieParser = require("cookie-parser");
 const { requireAuth, checkUser } = require("./middleware/authMiddleware");
+const dotenv = require("dotenv");
+
+dotenv.config();
 // const pug = require("pug");
 //
 const app = express();
@@ -13,12 +16,11 @@ app.use(cookieParser());
 //server listening
 app.listen(3000, () => {
   console.log("Server is listening...");
+  console.log(process.env.MONGODB_CONNECT_URI);
 });
 //database connection
 mongoose
-  .connect(
-    "mongodb+srv://Mohammed:uu98AHQbjhsdkj@cluster0.f2r3h5j.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(process.env.MONGODB_CONNECT_URI)
   .then(() => {
     console.log("Connected successfully...");
   })
